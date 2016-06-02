@@ -1,0 +1,35 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+ 
+ <div id="heading"><h2>Your Orders</h2></div>
+<center>
+ <font size="+2"><table border="1"  id="table">
+ <tr>
+ <th>MODEL</th>
+ <th>COLOR</th>
+ <th>SIZE</th>
+ <th>PRICE</th>
+<th>STATUS</th>
+<th>CANCEL</th>
+ </tr> {% for product in photos %}
+ 
+ <tr>
+  <td><a href="{% url 'prodetail' id=product.productid %}">{{product.prodmodel}}</a></td>
+ <td>{{product.prodcolor}}</td>
+ <td>{{product.prodsize}}</td>
+ <td>{{product.prodprice}}</td>
+  <td>{{product.status}}</td>
+ <td><a href="{% url 'ordercancel' id=product.id %}" onclick="return confirm('Are you sure want to cancel?');">Cancel</a></td>
+    
+ </tr>
+ {% endfor %}
+ </table>
+ </font></center>
+ <br /><br />
+ Pending = Your order is processing for deliver.<br />
+ Delivered = Your order has been delivered successfully.
+ 
+ 
+{% endblock %}
+ 

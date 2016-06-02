@@ -1,0 +1,33 @@
+{% extends "app/forms.html" %}
+{% block forms %}
+<br />
+<br />
+<div id="form1">
+<form id="login" action="{% url 'iphone_upload' %}" method="post" enctype="multipart/form-data" >
+    {% csrf_token %}
+    <h1>Model</h1>
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags %} {% endif %}
+    <font color="#FF0000">{{ message }}</font>
+    {% endfor %}
+	{% endif %}
+    <fieldset id="inputs">
+    	<input name="product" type="text" placeholder="Product Name" autofocus required> 
+        <input name="model" type="text" placeholder="Model Name" required>   
+        <input name="color" type="text" placeholder="Color" required>
+        <input name="size" type="text" placeholder="Size" required>
+        <input name="price" type="text" placeholder="Price" required>
+        <input name="photo" type="file"  required multiple="multiple" />
+        <textarea name="details" rows="10" cols="55" required></textarea>
+    </fieldset>
+    <fieldset id="actions">
+        <input type="submit" id="submit" value="Upload">
+        <input type="reset" id="submit">
+      
+        </fieldset>
+    
+</form>
+</div>
+
+{% endblock %}

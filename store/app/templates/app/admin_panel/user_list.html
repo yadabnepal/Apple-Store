@@ -1,0 +1,27 @@
+{% extends "app/forms.html" %}
+{% block forms %}
+
+    <div id="heading"><h2>User List</h2></div><font size="+3"><center>
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags %} {% endif %}
+    <font color="#FF0000">{{ message }}</font>
+    {% endfor %}
+	{% endif %}
+<table bgcolor="#fff"  id="table" >
+    <tr>
+    	<th width="250px">Username</th>
+        <th width="250px">Delete User</th>
+        
+    </tr>
+    {% for photo in getphoto %}
+    <tr> 
+    	<td><a href="{% url 'user_profile' id=photo.pk %}">{{ photo.username }}</a></td>
+        <td><a href="{% url 'deleteuser' id=photo.pk %}" onclick="return confirm('Are you sure want to delete?');">Delete</a></td>
+    </tr>
+    {% empty %}
+    Sorry, no Entries
+    {% endfor %}
+</table></center>
+</font>
+{% endblock %}

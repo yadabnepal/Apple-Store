@@ -1,0 +1,16 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+<div id="heading"><h2>Search Result</h2></div>
+ {% for photos in iphone %}
+<div id="itemlist">
+<div id="imgsrc"><a href="{% url 'prodetail' id=photos.pk %}"><img src={{MEDIA_URL}}{{photos.photo}}/></a></div>
+<p1>{{photos.model}}</p1>
+<p2>{{photos.price}}</p2><br />
+<a href="{% url 'payment' id=photos.pk %}"><img src="{{STATIC_URL}}images/buy.png" /></a>
+</div>
+ 
+ {% empty %}
+    Sorry, No result found
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,146 @@
+{% extends "app/forms.html" %}
+{% block forms %}
+<br />
+<br />
+<script type="text/javascript">
+function call()
+{
+	var number=document.getElementById("mobile").value;
+	if(number.length<10||number.length>10)
+	{
+		alert("!!!Mobile Number Should Be 10 Digits!!!!");
+		document.getElementById("mobile").value="";
+	}
+	
+}
+function call1()
+{
+	var number=document.getElementById("phone").value;
+	if(number.length<13||number.length>13)
+	{
+		alert("!!!Phone Number Should Be 11 Digits!!!");
+		document.getElementById("phone").value="";
+	}
+	
+}
+function call4()
+{
+	var date=document.getElementById("year").value;
+	if(date.length<4||date.length>4)
+	{
+		alert("Invalid Date");
+	}
+	var newd = new Date;
+	if(date>2015)
+	{
+		alert("Invalid Date");
+		document.getElementById("year").value="";
+	}
+}
+
+</script>
+
+
+
+{% if user.is_authenticated %}
+
+<div id="form1">
+<form id="login" action="{% url 'userprofileupdate_fn' id=user.id %}" method="post"  enctype="multipart/form-data">
+    {% csrf_token %}
+    <h1>Profile</h1>
+
+    <fieldset id="inputs">
+    	<input type="hidden" name="userid" value="{{user.id}}" />
+        <input type="text" name="gender" placeholder="Gender"  value="{{profile.gender}}" autofocus="autofocus" required="required"/>
+        
+        
+        <label><b>Date of Birth:</b></label>
+        
+        <select name="day">
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="2016">3</option>
+<option value="2018">4</option>
+<option value="2019">5</option>
+<option value="2020">6</option>
+<option value="2021">2021</option>
+<option value="2022">2022</option>
+<option value="2023">2023</option>
+<option value="2024">2024</option>
+<option value="2025">2025</option>
+<option value="2026">2026</option>
+<option value="2027">2027</option>
+<option value="2028">2028</option>
+<option value="2029">2029</option>
+<option value="2030">2030</option>
+<option value="2031">2031</option>
+<option value="2032">2032</option>
+<option value="2033">2033</option>
+<option value="2034">2034</option>
+<option value="2035">2035</option>
+
+</select>
+        <select name="month">
+<option value="01">January</option>
+<option value="02">February</option>
+<option value="03">March</option>
+<option value="04">April</option>
+<option value="05">May</option>
+<option value="06">June</option>
+<option value="07">July</option>
+<option value="08">August</option>
+<option value="09">September</option>
+<option value="10">October</option>
+<option value="11">November</option>
+<option value="12">December</option>
+</select>
+          
+        <select name="year">
+<option value="1990">1990</option>
+<option value="2016">2016</option>
+<option value="2016">2017</option>
+<option value="2018">2018</option>
+<option value="2019">2019</option>
+<option value="2020">2020</option>
+<option value="2021">2021</option>
+<option value="2022">2022</option>
+<option value="2023">2023</option>
+<option value="2024">2024</option>
+<option value="2025">2025</option>
+<option value="2026">2026</option>
+<option value="2027">2027</option>
+<option value="2028">2028</option>
+<option value="2029">2029</option>
+<option value="2030">2030</option>
+<option value="2031">2031</option>
+<option value="2032">2032</option>
+<option value="2033">2033</option>
+<option value="2034">2034</option>
+<option value="2035">2035</option>
+
+</select>
+<br />
+<br />
+        
+        <input type="text" name="country" placeholder="Country" value="{{profile.country}}" required="required" />
+        <input type="text" name="state" placeholder="State" value="{{profile.state}}" required="required"/>  
+        <input type="text" name="city" placeholder="City" value="{{profile.city}}" required="required"/>
+        <input type="number" name="phone" id="phone" placeholder="Phone"  value="{{profile.phone}}" onchange="call1()" required="required"/>
+        <input type="number" name="mobile" id="mobile" placeholder="Mobile" value="{{profile.mobile}}" onchange="call()" required="required"/>
+        <label><b>Upload your Image</b></label>
+        <input type="file" name="userphoto" required="required"/>
+        
+    </fieldset>
+    <fieldset id="actions">
+        <input type="submit" id="submit" value="Update">
+      
+        <a href="{% url 'reset' %}">Forgot your password?</a><a href="{% url 'register' %}">Register</a>
+    </fieldset>
+    
+</form>
+</div>
+{% else %}
+Please Login
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "app/forms.html" %}
+{% block forms %}
+<br />
+<br />
+<div id="form1">
+<form  action="{% url 'register' %}" method="POST" role="form" id="login">    {% csrf_token %}
+    <h1>Register</h1>
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags %} {% endif %}
+    <font color="#FF0000">{{ message }}</font>
+    {% endfor %}
+	{% endif %}
+    <fieldset id="inputs">
+    	<input name="fname" type="text" placeholder="First Name" required> 
+        <input name="lname" type="text" placeholder="Last Name" required> 
+        <input name="email" type="email" placeholder="Email" required> 
+        <input name="username" type="text" placeholder="Username" required>   
+        <input name="password" type="password" placeholder="Password" required>
+    </fieldset>
+    <fieldset id="actions">
+        <input type="submit" id="submit" value="Register">
+        <a href="{% url 'login' %}">Sign In</a>
+    </fieldset>
+    
+</form>
+</div>
+{% endblock %}

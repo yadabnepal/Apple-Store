@@ -1,0 +1,19 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+
+  <div id="heading"><h2>{% for gets in get %}{{gets.product}}{% endfor %}</h2></div>
+  {% for photos in getphotos %}
+ 
+<div id="itemlist">
+
+<div id="imgsrc"><a href="{% url 'prodetail' id=photos.pk %}"><img src={{MEDIA_URL}}{{photos.photo}} alt="No Image"  /></a></div>
+<p1><b>{{photos.model}}</b></p1>
+<p2><b>{{photos.price}}</b></p2><br />
+<a href="{% url 'payment' id=photos.pk %}"><img src="{{STATIC_URL}}images/buy.png" /></a>
+</div>
+ 
+ {% empty %}
+    Sorry, No item found.
+    {% endfor %}
+{% endblock %}

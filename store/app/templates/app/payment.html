@@ -1,0 +1,176 @@
+{% extends "app/forms.html" %}
+{% block forms %}
+<br />
+<br />
+<script type="text/javascript">
+function call1()
+{
+	var number=document.getElementById("cvv").value;
+	if(number.length<3||number.length>3)
+	{
+		alert("Invalid CVV");
+		document.getElementById("cvv").value="";
+	}
+	
+}
+function call2()
+{
+	var number=document.getElementById("cardno").value;
+	if(number.length<16||number.length>16)
+	{
+		alert("Invalid Card Number");
+		document.getElementById("cardno").value="";
+	}
+	
+}
+function call()
+{
+	var number=document.getElementById("phone").value;
+	if(number.length<10||number.length>10)
+	{
+		alert("Enter 10 Digits Only");
+		document.getElementById("phone").value="";
+	}
+	
+}
+
+function call3()
+{
+	var number=document.getElementById("postal").value;
+	if(number.length>5)
+	{
+		alert("Invalid Postal Code");
+		document.getElementById("postal").value="";
+	}
+	
+}
+</script>
+
+{% if messages %}
+    {% for message in messages %}
+    {% if message.tags %} {% endif %}
+    <font color="#FF0000">{{ message }}</font>
+    {% endfor %}
+	{% endif %}
+    
+    
+    <style>
+	input{-webkit-border-radius:5px;
+	height:20px;
+	}
+	input[type="radio"]{
+		height:20px;
+		width:20px;
+	}
+	input[type="text"],[type="email"],[type="number"]
+	{
+	width:200px;
+
+	}
+	input[id="cvv"]
+	{
+	width:40px;
+
+	}
+	select{-webkit-border-radius:5px;
+	height:20px;}
+    input:focus{
+		border-color:#09F;
+	}
+	td{
+		height:40px;
+	}
+    </style>
+ <center> <b><font color="#009900"></font></b></center>
+<div id="form1">
+<form id="login" action="" method="post" >
+    {% csrf_token %}
+    <h1>Check Out</h1>
+    
+{% if user.is_authenticated %}
+<center><font color="#009900">Please enter your card information below and click order</font></center><br />
+<table><tr><th colspan="10"><center>Product</center></th></tr><tr><td colspan="10"><img src={{MEDIA_URL}}{{product.photo}} width="60px" height="60px;" /></td><td>{{product.model}}<br /><br />{{product.price}}</td> </tr></table>
+<input type="number" name="productid" value="{{product.id}}" hidden="hidden" />
+<input type="text" name="productmodel" value="{{product.model}}" hidden="hidden" />
+<input type="text" name="username" value="{{user.username}}" hidden="hidden" />
+<input type="text" name="prodcolor" value="{{product.color}}" hidden="hidden" />
+<input type="text" name="prodsize" value="{{product.size}}" hidden="hidden" />
+<input type="text" name="prodprice" value="{{product.price}}" hidden="hidden" />
+<table><tr>
+ 
+    <td><label> Credit Card Accepted:</label></td><td>
+	   	<input type="radio" value="Visa" name="cardtype" style="width:40xp; height:20px;" checked="checked"/> <img src="{{STATIC_URL}}images/visa_512.png" width="40px" height="30px" />
+        <input type="radio" value="Master" name="cardtype" style="width:40xp; height:20px;" /><img src="{{STATIC_URL}}images/mastercard.png" width="40px" height="30px" />
+   		<input type="radio" value="Discover" name="cardtype" style="width:40xp; height:20px;" /><img src="{{STATIC_URL}}images/discover-card.jpg" width="40px" height="30px" />
+       
+        
+        </td>
+        
+   </tr>
+<tr><td><label>Card Number:</label></td><td><input type="number" name="cardnumber" id="cardno" onchange="call2()" maxlength="16" placeholder="Card Number" required autofocus="autofocus"/></td></tr>
+<tr><td><label>Expiry Date MM/YY:</label></td><td>
+<select name="expirymonth">
+<option value="1">January</option>
+<option value="2">February</option>
+<option value="3">March</option>
+<option value="4">April</option>
+<option value="5">May</option>
+<option value="6">June</option>
+<option value="7">July</option>
+<option value="8">August</option>
+<option value="9">September</option>
+<option value="10">October</option>
+<option value="11">November</option>
+<option value="12">December</option>
+</select>
+<select name="expiryyear">
+<option value="2015">2015</option>
+<option value="2016">2016</option>
+<option value="2016">2017</option>
+<option value="2018">2018</option>
+<option value="2019">2019</option>
+<option value="2020">2020</option>
+<option value="2021">2021</option>
+<option value="2022">2022</option>
+<option value="2023">2023</option>
+<option value="2024">2024</option>
+<option value="2025">2025</option>
+<option value="2026">2026</option>
+<option value="2027">2027</option>
+<option value="2028">2028</option>
+<option value="2029">2029</option>
+<option value="2030">2030</option>
+<option value="2031">2031</option>
+<option value="2032">2032</option>
+<option value="2033">2033</option>
+<option value="2034">2034</option>
+<option value="2035">2035</option>
+
+</select>
+</td></tr>
+<tr><td><label>CVV:</label></td><td><input type="password" maxlength="3" name="cvv" id="cvv" placeholder="CVV" required onchange="call1()" /></td><td> <img src="{{STATIC_URL}}images/cvv.png" width="40px" height="30px"  /></td></tr>
+<tr ><td><label>Name On Card:</label></td><td><input type="text" name="cardname" maxlength="13" value="{{user.first_name}} {{user.last_name}}" placeholder="Name On Card" required/></td></tr>
+<tr><td><label><b><u>Shipping Address</u></b></label></td></tr>
+<tr ><td><label>Country:</label></td><td><input type="text" name="country" maxlength="13" placeholder="Country" required/></td></tr>
+
+
+<tr><td><label>Address 1:</label></td><td><input type="text" name="address1" maxlength="13" placeholder="Address 1" required/></td></tr>
+<tr><td><label>Address 2:</label></td><td><input type="text" name="address2" maxlength="13" placeholder="Address2" required/></td></tr>
+<tr><td><label>City:</label></td><td><input type="text" name="city" maxlength="13" value="{{userprofile.city}}" placeholder="City" required/></td></tr>
+<tr><td><label>State:</label></td><td><input type="text" name="state" maxlength="13" placeholder="State" required/></td></tr>
+<tr><td><label>Postal Code:</label></td><td><input type="number" name="postalcode" onchange="call3()" id="postal" maxlength="13" placeholder="Postal Code" required/></td></tr>
+<tr><td><label>Mobile Number:</label></td><td><input type="number" name="phonenumber" id="phone" maxlength="13" placeholder="Phone Number" required onchange="call()"/></td></tr>
+<tr><td><label>Email:</label></td><td><input type="email" name="email" value="{{user.email}}" placeholder="Email" required/></td></tr>
+<input type="number" hidden="hidden" name="userid" value="{{user.id}}" />
+    </table>
+    <fieldset id="actions">
+    	<input type="reset" id="submit" value="Reset" />
+        <input type="submit" id="submit" value="Order" style="float:right" >
+    </fieldset>
+</form>
+{% else %}
+Please Login<a href="{% url 'login' %}" style="float:right;">Login</a>
+{% endif %}
+</div>
+
+{% endblock %}

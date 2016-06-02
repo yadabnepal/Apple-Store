@@ -1,0 +1,38 @@
+{% extends "app/forms.html" %}
+{% block forms %}
+    <div id="heading"><h2>Product List</h2></div>
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags %} {% endif %}
+    <font color="#FF0000">{{ message }}</font>
+    {% endfor %}
+	{% endif %}
+    <center>
+  
+<table id="table" >
+    <tr>
+    	<th>PRODCUCT</th>
+        <th>MODEL</th>
+        <th>PRICE</th>
+        <th>COLOR</th>
+        <th>SIZE</th>
+    </tr>
+    {% for photo in getphoto %}
+    <tr> 
+    	<td><font color="#FF0000">{{ photo.product }} </font></td>
+        <td><a href="{% url 'prodetail' id=photo.pk %}">{{ photo.model }}</a></td>
+        <td>{{ photo.price }}</td>
+        <td>{{ photo.color }}</td>
+        <td>{{ photo.size }}</td>
+        <td><a href="{% url 'delete' id=photo.pk %}" onclick="return confirm('Are you sure want to delete?');">Delete</a></td>
+    </tr>
+    {% empty %}
+    Sorry, no Entries
+    {% endfor %}
+</table></center>
+
+
+{% endblock %}
+
+
+

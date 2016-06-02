@@ -1,0 +1,70 @@
+{% extends "app/forms.html" %}
+{% block forms %}
+
+
+<style type="text/css">
+
+  #new:{float:right; }
+  #new ul {list-style: none;padding: 0px;margin: 0px;
+  }
+  #new ul li {display: block;position: relative;}
+  #new li ul {display: none; background-color:#fff; color:#000;}
+  #new ul li a {display: block;  
+  padding: 5px 10px 5px 10px;text-decoration: none;
+           white-space: nowrap;color: #fff;}
+  #new ul li a:hover {background:#ededed; }
+  #new li:hover ul {display: block; position: absolute;}
+ 
+
+  #new #drop-nav li ul li {border-top: 0px;}
+</style>
+
+
+
+
+    <div id="heading"><h2>Orders List</h2></div>
+   
+<center><table bgcolor="#fff" border="1" id="table" >
+ {% if messages %}
+    {% for message in messages %}
+    {% if message.tags %} {% endif %}
+    <font color="#FF0000">{{ message }}</font>
+    {% endfor %}
+	{% endif %}
+    <tr>
+    	<th>Model</th>
+        <th>SIZE</th>
+        <th>COLOR</th>
+        <th>USERNAME</th>
+        <th>ADDRESS</th>
+        <th>Phone</th>
+        <th><div id="new"><ul id="drop-nav"><li><a href="#">Order Date</a>
+        <ul><li><a href="{% url 'orderbytodaydate' %}">Today </a></li>
+        <li><a href="{% url 'orderbyweekdate' %}">This Week</a></li>
+        <li><a href="{% url 'orderbymonthdate' %}">This Month</a></li>
+        </ul>
+        
+        </li></ul></div></th><div class="clear"></div>
+        <th><a href="{% url 'orderbydelivery' %}">STATUS</a></th>
+ 
+ 
+    </tr>
+    {% for photo in photos %}
+    
+    <tr> 
+    	<td><a href="{% url 'prodetail' id=photo.productid %}">{{ photo.prodmodel }}</a></td>
+        <td>{{ photo.prodsize }}</td>
+        <td>{{ photo.prodcolor }}</td>
+        <td><a href="{% url 'orderbyuser' id=photo.userid %}">{{ photo.username }}</a></td>
+        <td>{{ photo.address1|linebreaks }}{{ photo.address2 }}</td>
+        <td>{{photo.phonenumber}}</td>
+         <td>{{photo.date.date}}<br />{{photo.date.time}}</td>
+        <td>{{photo.status}} &nbsp;{% if photo.status == "Pending" %} <a href="{% url 'statuschange' id=photo.id %}" onclick="return confirm('Are you sure the product is delivered?');"> 
+        <br />Change {% else %} {% endif %}</a></td>
+    </tr>
+    {% empty %}
+    Sorry, no Entries
+    {% endfor %}
+</table></center>
+
+{% endblock %}

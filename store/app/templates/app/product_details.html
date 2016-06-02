@@ -1,0 +1,122 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+  <div id="heading"><h2>{{photos.model}}</h2></div>
+  <img src={{MEDIA_URL}}{{photos.photo}} style="max-height:500px; max-width:400px;" />
+  <div id="productdetails">
+  <table>
+  <tr>  <td>MODEL:</td><td>{{photos.model}}</td>  </tr>
+  <tr>  <td>COLOR:</td><td>{{photos.color}}</td>  </tr>
+  <tr>  <td>SIZE:</td><td>{{photos.size}}</td>  </tr>
+  <tr>  <td>PRICE:</td><td>{{photos.price}}</td>  </tr>
+  </table>
+  <a href="{% url 'payment' id=photos.pk %}"><img src="{{STATIC_URL}}images/buy.png" /></a>
+  </div><div class="clear"></div>
+  
+  <style>
+  #myheading{
+	  font-size:24px;
+	  width:100%;
+	  height:40px;
+	  background:#CFC;
+	  text-decoration:underline;
+	  font-weight:bold;
+	  text-align:center;
+	  margin-bottom:10px;
+	  padding-top:10px;
+
+  }
+  </style>
+ <div id="myheading">Details</div>
+ {{photos.details|linebreaks}}
+ 
+ <br /><br />
+ 
+ {% if user.is_authenticated %}
+ <div id="comments"><b><u>Write Review</u></b>
+ {% if messages %}
+    {% for message in messages %}
+    {% if message.tags %} {% endif %}
+    <font color="#FF0000">{{ message }}</font>
+    {% endfor %}
+	{% endif %}
+ <div id="users"><b>{{user.first_name}} {{user.last_name}}</b></div>
+ <form method="post" action="{% url 'comments' %}">
+  {% csrf_token %}
+  <input type="submit" value="Post" />
+  <input type="number" value="{{photos.id}}" hidden="hidden" name="productid"/>
+  <input type="number" value="{{user.id}}" hidden="hidden" name="userid"/>
+  <input type="text" value="{{user.first_name}} {{user.last_name}}" hidden="hidden" name="username"/>
+  <textarea name="comment" placeholder="Write a review..." required="required" ></textarea>
+  </form>
+ </div>
+ {% else %}
+ {% endif %}
+ <div class="clear"></div>
+ 
+ 
+
+
+
+<style type="text/css">
+.reviewdisplay1{
+	width:100%;
+	min-height:30px;
+}
+.reviewdisplay1 .userright1{
+	width:160px;
+	min-height:35px;
+	background-color:#CCC;
+	text-align:center;
+	padding-top:10px;
+	float:left;
+	-webkit-border-radius:5px;
+	margin-top:5px;
+
+}
+
+.reviewdisplay1 .reviews1{
+	min-height:45px;
+	float:right;
+	background-color:#CCC;
+	-webkit-border-radius:5px;
+	text-align:center;
+	margin-top:5px;
+}
+.reviewdisplay1 .reviews1 .cmts1{
+	min-height:40px;
+	font-weight:normal;
+	width:480px;
+	padding-left:10px;
+	float:left;
+	font-size:12px;
+}
+.reviewdisplay1 .reviews1 .deletereview1{
+	padding-top:15px;
+	padding-right:20px;
+	float:right;
+}
+</style>
+<b><u>Users Review</u></b>
+{% for comment in comments %}
+<div class="reviewdisplay1">
+<div class="userright1"><b>{{comment.username}}<b></div>
+<div class="reviews1">
+<div class="cmts1">{{comment.comment|linebreaks}}</div>
+
+<div class="deletereview1">{% if user.is_staff %}<a href="{% url 'deletecomment' id=comment.id %}" onclick="return confirm('Are you sure want to delete?');"><img src="{{STATIC_URL}}images\delete.png" width="15px" height="15px" /></a>{% else %}
+ {% endif %}</div>
+
+</div>
+</div>
+<div class="clear"></div>
+{% empty %}
+    <br />Sorry, no review. Write First review.
+    {% endfor %}
+ 
+ 
+ 
+ 
+ 
+   
+{% endblock %}

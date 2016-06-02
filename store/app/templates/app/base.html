@@ -1,0 +1,197 @@
+{% extends "app/container.html" %}
+{% block container %}
+	<div id="title">
+    
+		<div id="logo"><img src="{{STATIC_URL}}images/applestore.png" width="160px" height="80px" /></div>
+        
+		<div id="toplinker">
+        
+			{% if user.is_authenticated %}
+            <div id="user">
+             {% if user.is_staff %}
+             <a href="{% url 'admin_panel' %}"><img src="{{STATIC_URL}}images/admin.png" width="40px" height="40px;" title="Admin Panel"/> </a><br />
+  			{% else %}
+            &nbsp;<a href="{% url 'user_profile' id=user.pk %}"><img src="{{STATIC_URL}}images/User-icon.png" width="30px" height="30px;" title="User Profile"/><font size="+1">Profile</font></a><br />
+            {% endif %}</div>
+            Logged in as {{user.first_name}}, <a href="{% url 'logout' %}"> Logout</a>
+      		{% else %}
+          
+			<a href="{% url 'login' %}">Login</a> <a href="{% url 'register' %}">Register</a>
+			{% endif %}
+            
+             <form action="{% url 'search' %}" id="search" method="post">
+     {% csrf_token %}       
+  <input name="search" type="text" size="40" placeholder="Search..." />
+  
+</form>
+
+		</div>
+	</div>
+    <div class="clear"></div>
+	
+   <ul class="nav">
+		<li><a href="{% url 'home' %}">Home</a></li>
+		<li>
+			<a href="#">Products</a>
+			<ul>
+				<li><a href="{% url 'mackbook_list' %}">Macbook</a></li>
+				<li><a href="{% url 'iphone_list' %}">iPhone</a></li>
+				<li><a href="{% url 'ipod_list' %}">iPod</a></li>
+                <li><a href="{% url 'ipad_list' %}">iPad</a></li>
+			</ul>
+		</li>
+		<li><a href="{% url 'aboutus' %}">About Us</a></li>
+		
+		<li><a href="/contact_form/">Contact</a></li>
+	</ul>
+    
+   
+	<div class="content"> <div id="featured">
+  <!-- use jssor.slider.min.js instead for release -->
+    <!-- jssor.slider.min.js = (jssor.js + jssor.slider.js) -->
+    <script type="text/javascript" src="{{STATIC_URL}}js/jssor.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}js/jssor.slider.js"></script>
+    <script>
+        jssor_slider1_starter = function (containerId) {
+            var options = {
+                $AutoPlay: true,                                    //[Optional] Whether to auto play, to enable slideshow, this option must be set to true, default value is false
+                $AutoPlaySteps: 4,                                  //[Optional] Steps to go for each navigation request (this options applys only when slideshow disabled), the default value is 1
+                $AutoPlayInterval: 4000,                            //[Optional] Interval (in milliseconds) to go for next slide since the previous stopped if the slider is auto playing, default value is 3000
+                $PauseOnHover: 1,                               //[Optional] Whether to pause when mouse over if a slider is auto playing, 0 no pause, 1 pause for desktop, 2 pause for touch device, 3 pause for desktop and touch device, 4 freeze for desktop, 8 freeze for touch device, 12 freeze for desktop and touch device, default value is 1
+
+                $ArrowKeyNavigation: true,   			            //[Optional] Allows keyboard (arrow key) navigation or not, default value is false
+                $SlideDuration: 160,                                //[Optional] Specifies default duration (swipe) for slide in milliseconds, default value is 500
+                $MinDragOffsetToSlide: 20,                          //[Optional] Minimum drag offset to trigger slide , default value is 20
+                $SlideWidth: 200,                                   //[Optional] Width of every slide in pixels, default value is width of 'slides' container
+                //$SlideHeight: 150,                                //[Optional] Height of every slide in pixels, default value is height of 'slides' container
+                $SlideSpacing: 3, 					                //[Optional] Space between each slide in pixels, default value is 0
+                $DisplayPieces: 6,                                  //[Optional] Number of pieces to display (the slideshow would be disabled if the value is set to greater than 1), the default value is 1
+                $ParkingPosition: 0,                              //[Optional] The offset position to park slide (this options applys only when slideshow disabled), default value is 0.
+                $UISearchMode: 1,                                   //[Optional] The way (0 parellel, 1 recursive, default value is 1) to search UI components (slides container, loading screen, navigator container, arrow navigator container, thumbnail navigator container etc).
+                $PlayOrientation: 1,                                //[Optional] Orientation to play slide (for auto play, navigation), 1 horizental, 2 vertical, 5 horizental reverse, 6 vertical reverse, default value is 1
+                $DragOrientation: 1,                                //[Optional] Orientation to drag slide, 0 no drag, 1 horizental, 2 vertical, 3 either, default value is 1 (Note that the $DragOrientation should be the same as $PlayOrientation when $DisplayPieces is greater than 1, or parking position is not 0)
+
+                $BulletNavigatorOptions: {                                //[Optional] Options to specify and enable navigator or not
+                    $Class: $JssorBulletNavigator$,                       //[Required] Class to create navigator instance
+                    $ChanceToShow: 2,                               //[Required] 0 Never, 1 Mouse Over, 2 Always
+                    $AutoCenter: 0,                                 //[Optional] Auto center navigator in parent container, 0 None, 1 Horizontal, 2 Vertical, 3 Both, default value is 0
+                    $Steps: 1,                                      //[Optional] Steps to go for each navigation request, default value is 1
+                    $Lanes: 1,                                      //[Optional] Specify lanes to arrange items, default value is 1
+                    $SpacingX: 0,                                   //[Optional] Horizontal space between each item in pixel, default value is 0
+                    $SpacingY: 0,                                   //[Optional] Vertical space between each item in pixel, default value is 0
+                    $Orientation: 1                                 //[Optional] The orientation of the navigator, 1 horizontal, 2 vertical, default value is 1
+                },
+
+                $ArrowNavigatorOptions: {
+                    $Class: $JssorArrowNavigator$,              //[Requried] Class to create arrow navigator instance
+                    $ChanceToShow: 1,                               //[Required] 0 Never, 1 Mouse Over, 2 Always
+                    $AutoCenter: 2,                                 //[Optional] Auto center navigator in parent container, 0 None, 1 Horizontal, 2 Vertical, 3 Both, default value is 0
+                    $Steps: 4                                       //[Optional] Steps to go for each navigation request, default value is 1
+                }
+            };
+
+            var jssor_slider1 = new $JssorSlider$(containerId, options);
+
+            //responsive code begin
+            //you can remove responsive code if you don't want the slider scales while window resizes
+            function ScaleSlider() {
+                var bodyWidth = document.body.clientWidth;
+                if (bodyWidth)
+                    jssor_slider1.$ScaleWidth(Math.min(bodyWidth, 1000));
+                else
+                    window.setTimeout(ScaleSlider, 30);
+            }
+
+            ScaleSlider();
+            $Jssor$.$AddEvent(window, "load", ScaleSlider);
+
+            $Jssor$.$AddEvent(window, "resize", $Jssor$.$WindowResizeFilter(window, ScaleSlider));
+            $Jssor$.$AddEvent(window, "orientationchange", ScaleSlider);
+            ////responsive code end
+        };
+    </script>
+    <!-- Jssor Slider Begin -->
+    <!-- You can move inline styles to css file or css block. -->
+    <div id="slider1_container" style="position: relative; top: 0px; left: 0px; width: 1000px; height: 150px; overflow: hidden; ">
+
+        <!-- Loading Screen -->
+        <div u="loading" style="position: absolute; top: 0px; left: 0px;">
+            <div style="filter: alpha(opacity=70); opacity:0.7; position: absolute; display: block;
+                        background-color: #000; top: 0px; left: 0px;width: 100%;height:100%;">
+            </div>
+            <div style="position: absolute; display: block; background: url({{STATIC_URL}images/loading.gif) no-repeat center center;
+                        top: 0px; left: 0px;width: 100%;height:100%;">
+            </div>
+        </div>
+
+        <!-- Slides Container -->}
+        <div u="slides" style="cursor: move; position: absolute; left: 0px; top: 0px; width: 1000px; height: 150px; overflow: hidden;">
+        	{% for product in prodprocess %}
+            <div><a href="{% url 'prodetail' id=product.pk %}"><img u="image" src="{{MEDIA_URL}}{{product.photo}}" /></a></div>
+           
+           
+            {% endfor %}
+            
+        </div>
+
+               <div u="navigator" class="jssorb03" style="position: absolute; bottom: 4px; right: 6px;">
+            <!-- bullet navigator item prototype -->
+            <div u="prototype" style="position: absolute; width: 21px; height: 21px; text-align:center; line-height:21px; color:white; font-size:12px;"><div u="numbertemplate"></div></div>
+        </div>
+       
+        
+        <span u="arrowleft" class="jssora03l" style="width: 55px; height: 55px; top: 123px; left: 8px;">
+        </span>
+        <!-- Arrow Right -->
+        <span u="arrowright" class="jssora03r" style="width: 55px; height: 55px; top: 123px; right: 8px">
+        </span>
+        <!-- Arrow Navigator Skin End -->
+      
+        <!-- Trigger -->
+        <script>
+            jssor_slider1_starter('slider1_container');
+        </script>
+    </div>
+    <!-- Jssor Slider End -->    
+    </div>
+    
+    
+    
+    <div id="detail">
+<div id="category"><h2>Category</h2>
+<h3><a href="{% url 'mackbook_list' %}">MacBook</a></h3>
+<h3><a href="{% url 'iphone_list' %}">iPhone</a></h3>
+<h3><a href="{% url 'ipod_list' %}">iPod</a></h3>
+<h3><a href="{% url 'ipad_list' %}">iPad</h3></a><br /><br />
+<img src="{{STATIC_URL}}images\Facebook-Like-Box.png" />
+</div>
+
+<div id="items">
+{% block content %}{% endblock %}
+
+</div>
+<div class="clear"></div>
+
+</div>
+
+
+</div>
+
+<div id="footer">
+<ul>
+<p>&copy; AppleStore</p>
+<li><a href="/aboutus/">About Us</a></li>
+<li><a href="/contact_form/">Contact Us</a></li>
+<li><a href="/term_of_use/">Term of Use</a></li>
+<li><a href="/privacy_policy/">Privacy Policy</a></li>
+
+</ul>
+
+</div>
+
+
+</div>
+
+
+</div>
+{% endblock %}

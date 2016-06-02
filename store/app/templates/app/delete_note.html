@@ -1,0 +1,13 @@
+{% extends "app/forms.html" %}
+{% block forms %}
+
+<div id="form1">
+Hey, are you sure you want to delete {{ object.title }}?
+<form id="login" method="post" >
+   {% csrf_token %}
+  <button type="submit" class="btn btn-danger">Yeap, I'm sure.</button>
+    
+</form>
+</div>
+
+{% endblock %}

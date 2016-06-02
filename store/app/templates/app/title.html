@@ -1,0 +1,10 @@
+<div id="title">
+		<div id="logo"><img src="{{STATIC_URL}}images/applestore.png" width="160px" height="80px" /></div>
+		<div id="toplinker">
+			{% if user.is_authenticated %}
+			Logged in as {{user.first_name}}, <a href="{% url 'logout' %}"> Logout</a>
+			{% else %}
+			<a href="{% url 'login' %}">Login</a> <a href="{% url 'register' %}">Register</a>
+			{% endif %}
+		</div>
+	</div>

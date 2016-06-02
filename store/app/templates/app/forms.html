@@ -1,0 +1,62 @@
+{% extends "app/container.html" %}
+{% block container %}
+<div id="title">
+<div id="logo"><img src="{{STATIC_URL}}images/applestore.png" width="160px" height="80px" /></div>
+<div id="toplinker">
+{% if user.is_authenticated %}
+             <div id="user">
+             {% if user.is_staff %}
+             <a href="{% url 'admin_panel' %}"><img src="{{STATIC_URL}}images/admin.png" width="40px" height="40px;" title="Admin Panel"/> </a>
+  			{% else %}
+            &nbsp;<a href="{% url 'user_profile' id=user.pk %}"><img src="{{STATIC_URL}}images/User-icon.png" width="30px" height="30px;" title="User Profile"/><font size="+1">Profile</font></a><br />
+            {% endif %}
+           	</div> 
+            Logged in as {{user.first_name}}, <a href="{% url 'logout' %}"> Logout</a>
+      		{% else %}
+          
+			<a href="{% url 'login' %}">Login</a> <a href="{% url 'register' %}">Register</a>
+			{% endif %}
+<form action="{% url 'search' %}" id="search" method="post">
+     {% csrf_token %}       
+  <input name="search" type="text" size="40" placeholder="Search..." />
+  
+</form>
+</div>
+<div class="clear"></div>
+</div>
+
+ <ul class="nav">
+		<li><a href="{% url 'home' %}">Home</a></li>
+		<li>
+			<a href="#">Products</a>
+			<ul>
+				<li><a href="{% url 'mackbook_list' %}">Macbook</a></li>
+				<li><a href="{% url 'iphone_list' %}">iPhone</a></li>
+				<li><a href="{% url 'ipod_list' %}">iPod</a></li>
+                <li><a href="{% url 'ipad_list' %}">iPad</a></li>
+			</ul>
+		</li>
+		<li><a href="{% url 'aboutus' %}">About Us</a></li>
+
+		
+		<li><a href="/contact_form/">Contact</a></li>
+	</ul>
+<div class="content">
+
+{% block forms %}{% endblock %}
+
+</div>
+
+<div id="footer">
+<ul>
+<p>&copy; AppleStore</p>
+<li><a href="/aboutus/">About Us</a></li>
+<li><a href="/contact_form/">Contact Us</a></li>
+<li><a href="/term_of_use/">Term of Use</a></li>
+<li><a href="/privacy_policy/">Privacy Policy</a></li>
+
+</ul>
+
+</div>
+
+{% endblock %}

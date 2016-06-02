@@ -1,0 +1,28 @@
+{% extends "app/forms.html" %}
+{% block forms %}
+<br />
+<br />
+<div id="form1">
+<form id="login" action="{% url 'login' %}" method="post" >
+    {% csrf_token %}
+    <h1>Log In</h1>
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags %} {% endif %}
+    <font color="#FF0000">{{ message }}</font>
+    {% endfor %}
+	{% endif %}
+    <fieldset id="inputs">
+        <input name="username" type="text" placeholder="Username" autofocus required>   
+        <input name="password" type="password" placeholder="Password" required>
+    </fieldset>
+    <fieldset id="actions">
+        <input type="submit" id="submit" value="Log in">
+      
+        <a href="{% url 'reset' %}">Forgot your password?</a><a href="{% url 'register' %}">Register</a>
+    </fieldset>
+    
+</form>
+</div>
+
+{% endblock %}

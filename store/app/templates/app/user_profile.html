@@ -1,0 +1,47 @@
+{% extends "app/base.html" %}
+{% block content %}
+
+
+<div id="heading"><h2>User Profile</h2></div>
+
+{% if messages %}
+    {% for message in messages %}
+    {% if message.tags %} {% endif %}
+    <font color="#FF0000">{{ message }}</font><br />
+    {% endfor %}
+	{% endif %}
+    
+{% if user.is_authenticated %}
+
+<table style="float:left; font-size:20px;" >
+<th><u>Personal Information<u></th>
+<tr><td>Name:</td><td>{{acc.first_name}} {{acc.last_name}}</td></tr>
+<tr><td>Username:</td><td>{{acc.username}}</td></tr>
+<tr><td>Email:</td><td>{{acc.email}}</td></tr>
+<tr><td>Password:</td><td>******* <a href="{% url 'change_password' id=user.id%}">Change</a></td></tr>
+<tr><td>Gender:</td><td>{{users.gender}}</td></tr>
+<tr><td>Date of Birth:</td><td>{{users.dob}}</td></tr>
+<th><u>Contact Information<u></th>
+<tr><td>Country:</td><td>{{users.country}}</td></tr>
+<tr><td>State:</td><td>{{users.state}}</td></tr>
+<tr><td>City:</td><td>{{users.city}}</td></tr>
+<tr><td>Phone:</td><td>{{users.phone}}</td></tr>
+<tr><td>Mobile:</td><td>{{users.mobile}}</td></tr>
+</table>
+<img src={{MEDIA_URL}}{{users.userphoto}} style="float:right;" width="160px" height="160px" alt="No Image"/>
+
+<div class="clear"></div>
+
+
+
+{% if user.is_staff %}
+{% else %}
+<font size="+3"><a href="{% url 'view_orders' id=user.id%}">My Orders</a></font>
+<font size="+3" style="float:right;"><a href="{% url 'userprofileupdate_fn' id=user.id %}" >Update</a></font>
+{% endif %}
+{% else %}
+Please Login
+{% endif %}
+
+
+{% endblock %}

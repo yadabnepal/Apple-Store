@@ -1,0 +1,18 @@
+{% extends "app/forms.html" %}
+{% block forms %}
+       <br />
+<br />
+    {% if errors %}
+        <ul>
+            {% for error in errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+  <div id="form1">
+    <form id="login">
+    <p>Thanks for contacting us!</p>
+    
+    </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+	<div id="heading"><h2>Products</h2></div>
+   
+   
+   {% for photo in iphone %}
+<div id="itemlist">
+<div id="imgsrc"><a href="{% url 'prodetail' id=photo.pk %}"><img src={{MEDIA_URL}}{{photo.photo}} alt="No Image"  /></a></div>
+<p1><b>{{photo.model}}</b></p1>
+<p2><b>{{photo.price}}</b></p2><br />
+
+<a href="{% url 'payment' id=photo.pk %}"><img src="{{STATIC_URL}}images/buy.png" /></a>
+</div>
+{% endfor %}
+{% endblock %}
